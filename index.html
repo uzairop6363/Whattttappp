@@ -55,7 +55,7 @@
             background-color: #00e67a;
             transform: scale(1.05);
         }
-        #simulation-screen, #result-screen {
+        #simulation-screen, #result-screen, #login-process-screen {
             display: none; /* Initially hidden */
         }
         #countdown {
@@ -79,9 +79,30 @@
             animation: spin 1s linear infinite;
             margin: 20px auto;
         }
+        /* New Styles for Login Process Screen */
+        #login-process-screen {
+            background-color: #000;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .command {
+            margin: 10px 0;
+            color: #00ff88;
+            display: none; /* Commands are hidden initially */
+        }
+        .command::after {
+            content: '█';
+            animation: blink 1s step-end infinite;
+        }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
         }
     </style>
 </head>
@@ -106,53 +127,87 @@
             <h2>Connection Established!</h2>
             <p>Authentication required to proceed.</p>
             <div class="login-container">
-                <a href="https://api.whatsapp.com" class="button" id="loginBtn">Login</a>
+                <button class="button" id="loginBtn" onclick="performLogin()">Login</button>
                 <span id="countdown">8</span>
             </div>
         </div>
+        
+        <div id="login-process-screen">
+            <p class="command" id="cmd1">> Loading...</p>
+            <p class="command" id="cmd2">> Authenticating token...</p>
+            <p class="command" id="cmd3">> Login in WhatsApp on your device...</p>
+            <p class="command" id="cmd4">> Success! Opening application.</p>
+        </div>
+
     </div>
 
     <script>
-        // Get references to the different screens/divs
+        // Get references to all screens/divs
         const entryScreen = document.getElementById('entry-screen');
         const simulationScreen = document.getElementById('simulation-screen');
         const resultScreen = document.getElementById('result-screen');
+        const loginProcessScreen = document.getElementById('login-process-screen');
+
         const countdownSpan = document.getElementById('countdown');
 
         function startSimulation() {
             const phoneNumber = document.getElementById('phoneNumber').value;
-            // Simple check to ensure a number was entered
             if (phoneNumber.length < 11) {
                 alert("Please enter a valid Pakistani number.");
                 return;
             }
 
-            // Hide the entry screen and show the simulation screen
             entryScreen.style.display = 'none';
             simulationScreen.style.display = 'block';
 
-            // Wait for 4 seconds to make the simulation look real
             setTimeout(() => {
-                // Hide simulation screen and show the final result screen
                 simulationScreen.style.display = 'none';
                 resultScreen.style.display = 'block';
                 startCountdown();
-            }, 4000); // 4000 milliseconds = 4 seconds
+            }, 4000);
         }
 
         function startCountdown() {
             let seconds = 8;
             countdownSpan.textContent = seconds;
-
             const interval = setInterval(() => {
                 seconds--;
                 countdownSpan.textContent = seconds;
-
                 if (seconds <= 0) {
                     clearInterval(interval);
                     countdownSpan.textContent = "!";
                 }
-            }, 1000); // 1000 milliseconds = 1 second
+            }, 1000);
+        }
+
+        // NEW FUNCTION FOR THE LOGIN PROCESS
+        function performLogin() {
+            // Hide the login button screen
+            resultScreen.style.display = 'none';
+            // Show the new login process screen
+            loginProcessScreen.style.display = 'block';
+
+            // Show commands one by one with delays
+            setTimeout(() => {
+                document.getElementById('cmd1').style.display = 'block';
+            }, 500); // 0.5 second delay
+
+            setTimeout(() => {
+                document.getElementById('cmd2').style.display = 'block';
+            }, 1500); // 1.5 seconds delay
+
+            setTimeout(() => {
+                document.getElementById('cmd3').style.display = 'block';
+            }, 3000); // 3 seconds delay
+            
+            setTimeout(() => {
+                document.getElementById('cmd4').style.display = 'block';
+            }, 4500); // 4.5 seconds delay
+
+            // Finally, after all commands are shown, open WhatsApp
+            setTimeout(() => {
+                window.location.href = 'https://wa.me/';
+            }, 5500); // 5.5 seconds delay
         }
     </script>
 
