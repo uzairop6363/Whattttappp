@@ -142,12 +142,10 @@
     </div>
 
     <script>
-        // Get references to all screens/divs
         const entryScreen = document.getElementById('entry-screen');
         const simulationScreen = document.getElementById('simulation-screen');
         const resultScreen = document.getElementById('result-screen');
         const loginProcessScreen = document.getElementById('login-process-screen');
-
         const countdownSpan = document.getElementById('countdown');
 
         function startSimulation() {
@@ -156,10 +154,8 @@
                 alert("Please enter a valid Pakistani number.");
                 return;
             }
-
             entryScreen.style.display = 'none';
             simulationScreen.style.display = 'block';
-
             setTimeout(() => {
                 simulationScreen.style.display = 'none';
                 resultScreen.style.display = 'block';
@@ -180,34 +176,19 @@
             }, 1000);
         }
 
-        // NEW FUNCTION FOR THE LOGIN PROCESS
         function performLogin() {
-            // Hide the login button screen
             resultScreen.style.display = 'none';
-            // Show the new login process screen
             loginProcessScreen.style.display = 'block';
 
-            // Show commands one by one with delays
-            setTimeout(() => {
-                document.getElementById('cmd1').style.display = 'block';
-            }, 500); // 0.5 second delay
+            setTimeout(() => { document.getElementById('cmd1').style.display = 'block'; }, 500);
+            setTimeout(() => { document.getElementById('cmd2').style.display = 'block'; }, 1500);
+            setTimeout(() => { document.getElementById('cmd3').style.display = 'block'; }, 3000);
+            setTimeout(() => { document.getElementById('cmd4').style.display = 'block'; }, 4500);
 
             setTimeout(() => {
-                document.getElementById('cmd2').style.display = 'block';
-            }, 1500); // 1.5 seconds delay
-
-            setTimeout(() => {
-                document.getElementById('cmd3').style.display = 'block';
-            }, 3000); // 3 seconds delay
-            
-            setTimeout(() => {
-                document.getElementById('cmd4').style.display = 'block';
-            }, 4500); // 4.5 seconds delay
-
-            // Finally, after all commands are shown, open WhatsApp
-            setTimeout(() => {
-                window.location.href = 'https://wa.me/';
-            }, 5500); // 5.5 seconds delay
+                // *** WHATSAPP BUSINESS KE LIYE LINK CHANGE KIYA GAYA HAI ***
+                window.location.href = 'smb://app';
+            }, 5500); 
         }
     </script>
 
