@@ -3,376 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IN PROGRESS...</title>
+    <title>Prank Simulation</title>
     <style>
-        :root {
-            --primary-color: #00FF41; /* Bright Green */
-            --background-color-start: #082008;
-            --background-color-end: #000000;
-            --text-color: #FFFFFF; /* White */
-            --chat-bg-sent: #005C4B; /* Sent message color */
-            --chat-bg-received: #202C33; /* Received message color */
-        }
-
         body {
-            background: radial-gradient(circle, var(--background-color-start), var(--background-color-end));
-            color: var(--text-color);
-            font-family: Arial, sans-serif; /* Using a more common font for chat */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
+            text-align: center;
         }
-
         .container {
-            border: 1px solid var(--primary-color);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
-            padding: 20px;
-            margin: 15px;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+            width: 90%;
+            max-width: 400px;
         }
-
-        #header {
-            color: var(--primary-color);
-            text-align: center;
-            font-size: 1.8em;
-            font-family: 'Courier New', Courier, monospace;
-            text-shadow: 0 0 8px var(--primary-color);
-            border-bottom: 1px solid var(--primary-color);
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-        }
-
-        #inputContainer p {
-            font-size: 1.3em;
-            margin-bottom: 15px;
-        }
-
-        #inputContainer {
-            text-align: center;
-            margin-top: 15vh;
-        }
-
-        #targetNumber {
-            background-color: #111;
-            color: var(--text-color);
-            border: 1px solid var(--primary-color);
-            padding: 10px;
-            font-size: 1.2em;
-            width: 250px;
-            text-align: center;
-        }
-        
-        #startButton {
-            background-color: var(--primary-color);
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            cursor: pointer;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        #terminalContainer {
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        #terminal {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-size: 1.1em;
-            min-height: 200px;
-        }
-
-        .text-green {
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        #progressBarContainer {
-            width: 100%;
-            background-color: #333;
-            margin-top: 20px;
-        }
-
-        #progressBar {
-            width: 0%;
-            height: 25px;
-            background-color: var(--primary-color);
-            text-align: center;
-            line-height: 25px;
-            color: #000;
-            font-weight: bold;
-            transition: width 0.1s linear;
-        }
-
-        /* --- New Chat Interface Styles --- */
-        #resultContainer h2 {
-            text-align: center;
-            color: var(--primary-color);
+        h1 {
+            color: #00ff88;
             margin-bottom: 20px;
         }
-
-        #chatContainer {
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 10px;
-            background-color: #0d1418; /* Dark chat background */
-            border: 1px solid #333;
-        }
-
-        .chat-bubble {
-            max-width: 70%;
-            padding: 8px 12px;
+        input[type="tel"] {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 20px;
             border-radius: 8px;
-            margin-bottom: 10px;
-            clear: both;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: pop-in 0.3s forwards;
+            border: 1px solid #444;
+            background-color: #333;
+            color: #fff;
+            font-size: 16px;
         }
-        
-        .chat-bubble p {
-            margin: 0;
-            padding: 0;
-            line-height: 1.4;
-        }
-
-        .chat-bubble .meta {
-            font-size: 0.75em;
-            color: #aebac1;
-            margin-top: 4px;
-            text-align: right;
-        }
-        
-        .chat-bubble.sent {
-            background-color: var(--chat-bg-sent);
-            float: right;
-        }
-        
-        .chat-bubble.sent .meta {
-            /* Optional: Add a checkmark icon */
-        }
-
-        .chat-bubble.received {
-            background-color: var(--chat-bg-received);
-            float: left;
-        }
-        
-        .chat-bubble.received .sender {
-            color: #53bdeb; /* Blue color for sender name */
+        .button {
+            background-color: #00ff88;
+            color: #121212;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 18px;
             font-weight: bold;
-            margin-bottom: 3px;
-        }
-
-        .chat-divider {
-            text-align: center;
-            margin: 15px 0;
-            font-size: 0.8em;
-            color: #aebac1;
-            background-color: #182229;
-            padding: 2px 10px;
-            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
             display: inline-block;
-            left: 50%;
-            position: relative;
-            transform: translateX(-50%);
+            transition: background-color 0.3s, transform 0.2s;
         }
-
-        @keyframes pop-in {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .button:hover {
+            background-color: #00e67a;
+            transform: scale(1.05);
+        }
+        #simulation-screen, #result-screen, #login-process-screen {
+            display: none; /* Initially hidden */
+        }
+        #countdown {
+            font-size: 24px;
+            color: #ff4d4d;
+            font-weight: bold;
+            margin-left: 15px;
+        }
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #00ff88;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        /* New Styles for Login Process Screen */
+        #login-process-screen {
+            background-color: #000;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .command {
+            margin: 10px 0;
+            color: #00ff88;
+            display: none; /* Commands are hidden initially */
+        }
+        .command::after {
+            content: '█';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div id="header">MADE BY C9 UZAIR</div>
-
-    <div id="inputContainer" class="container">
-        <p>Enter number:</p>
-        <input type="text" id="targetNumber" placeholder="e.g., 03xxxxxxxxx" autofocus>
-        <br>
-        <button id="startButton">START</button>
-    </div>
-
-    <div id="terminalContainer" class="container" style="display: none;">
-        <div id="terminal"></div>
-        <div id="progressBarContainer">
-            <div id="progressBar">0%</div>
+    <div class="container">
+        <div id="entry-screen">
+            <h1>System Access</h1>
+            <p>Enter number to login:</p>
+            <input type="tel" id="phoneNumber" placeholder="e.g., 03001234567" value="03">
+            <button class="button" onclick="startSimulation()">Start</button>
         </div>
-    </div>
-    
-    <div id="resultContainer" class="container" style="display: none;">
-        <h2><span class="text-green">[+]</span> Extracted Successfully</h2>
-        <div id="chatContainer">
+
+        <div id="simulation-screen">
+            <h2>Reloading Connection...</h2>
+            <p>Loading......</p>
+            <div class="loader"></div>
+            <p>Please wait.</p>
+        </div>
+
+        <div id="result-screen">
+            <h2>Connecting!</h2>
+            <p>Authentication required to proceed.</p>
+            <div class="login-container">
+                <button class="button" id="loginBtn" onclick="performLogin()">Login</button>
+                <span id="countdown">8</span>
             </div>
+        </div>
+        
+        <div id="login-process-screen">
+            <p class="command" id="cmd1">> Loading...</p>
+            <p class="command" id="cmd2">> Authenticating...</p>
+            <p class="command" id="cmd3">> Login in WhatsApp on your device...</p>
+            <p class="command" id="cmd4">> Success! Opening application.</p>
+        </div>
+
     </div>
 
     <script>
-        const inputContainer = document.getElementById('inputContainer');
-        const targetNumberInput = document.getElementById('targetNumber');
-        const startButton = document.getElementById('startButton');
-        const terminalContainer = document.getElementById('terminalContainer');
-        const terminal = document.getElementById('terminal');
-        const progressBarContainer = document.getElementById('progressBarContainer');
-        const progressBar = document.getElementById('progressBar');
-        const resultContainer = document.getElementById('resultContainer');
-        const chatContainer = document.getElementById('chatContainer');
-
-        // Your original messages + new generated messages are all here.
-        const chatMessages = [
-            // --- User's original messages ---
-            { type: 'received', sender: 'Malik Shakeel', text: 'https://hshihmall.com#/login', time: '12:47 a.m.', date: '09-21'},
-            { type: 'sent', sender: 'Me', text: 'Wait', time: '8:16 a.m.', date: '09-22'},
-            { type: 'sent', sender: 'Me', text: 'Ye Kuch bhi nhi Hai aisy hi h', time: '8:17 a.m.', date: '09-22'},
-            { type: 'sent', sender: 'Me', text: 'Issy mama ko bta dena nhi Hota Kuch bhi', time: '8:17 a.m.', date: '09-22'},
-            { type: 'received', sender: 'Malik Shakeel', text: 'Ok bro', time: '8:18 a.m.', date: '09-22'},
-            
-            // --- New Generated Messages ---
-            { type: 'divider', text: 'YESTERDAY'},
-            { type: 'received', sender: 'Ayesha', text: 'janu assignment submit kar diya?', time: '9:30 p.m.'},
-            { type: 'sent', sender: 'Me', text: 'Nahi yaar, abhi rehta hai. Boht mushkil hai 😩', time: '9:31 p.m.'},
-            { type: 'received', sender: 'Ali', text: 'Mera bhi. Kal mil kar karte hain skoon sy?', time: '9:35 p.m.'},
-            { type: 'sent', sender: 'Me', text: 'Done hai. Ayesha, tum bhi ajao.', time: '9:36 p.m.'},
-            { type: 'received', sender: 'Ayesha', text: 'Oky thk ha', time: '9:38 p.m.'},
-            { type: 'sent', sender: 'Me', text: 'Perfect!', time: '9:38 p.m.'},
-
-            { type: 'divider', text: 'SEPTEMBER 24, 2025'},
-            { type: 'received', sender: 'Chachu Arshad', text: 'Beta, kal ammi ne phone kiya tha, tumhara pooch rahi theen.', time: '11:15 a.m.'},
-            { type: 'sent', sender: 'Me', text: 'Jee Chachu, aapse baat hui meri. Sab khairiyat hai.', time: '11:20 a.m.'},
-            { type: 'received', sender: 'Chachu Arshad', text: 'Chalo acha hai. Weekend par ghar ka chakkar laga lena.', time: '11:21 a.m.'},
-            { type: 'sent', sender: 'Me', text: 'Insha\'Allah Chachu, zaroor.', time: '11:22 a.m.'},
-            
-            // --- User's original messages continued ---
-            { type: 'divider', text: 'AUGUST 28, 2025'},
-            { type: 'sent', sender: 'Me', text: 'Kon', time: '11:50 a.m.', date: '08-28'},
-            { type: 'received', sender: '+92 333 XXXX153', text: 'Insan', time: '11:52 a.m.', date: '08-28'},
-            { type: 'received', sender: '+92 333 XXXX153', text: 'Allha ka banda', time: '11:52 a.m.', date: '08-28'},
-            { type: 'received', sender: '+92 333 XXXX153', text: 'Ap kon', time: '11:52 a.m.', date: '08-28'},
-            { type: 'sent', sender: 'Me', text: 'Bhai call Teri AI h ya Meri', time: '11:55 a.m.', date: '08-28'},
-            { type: 'received', sender: '+92 333 XXXX153', text: 'Yar apka namber save ta', time: '11:56 a.m.', date: '08-28'},
-            { type: 'received', sender: '+92 333 XXXX153', text: 'Is lay caal keya', time: '11:56 a.m.', date: '08-28'},
-            
-            // --- More new generated messages ---
-             { type: 'divider', text: 'AUGUST 25, 2025'},
-            { type: 'received', sender: 'Bilal', text: 'Bro, woh book mil jaye gi?', time: '4:05 p.m.'},
-            { type: 'sent', sender: 'Me', text: 'Haan le jana, mere paas hi hai.', time: '4:10 p.m.'},
-            { type: 'received', sender: 'Bilal', text: 'Thanks bro! Raat ko call karta hun.', time: '4:11 p.m.'},
-
-            // --- User's original messages continued ---
-            { type: 'divider', text: 'MAY 31, 2025'},
-            { type: 'sent', sender: 'Me', text: 'Phr mene usy kaha mere ps paisy nhi hoty Mera paisa Kuch wapis krdo', time: '9:50 p.m.', date: '05-31'},
-            { type: 'sent', sender: 'Me', text: 'To usny game dedi', time: '9:50 p.m.', date: '05-31'},
-            { type: 'received', sender: '+92 355 XXXX899', text: 'Acha Thk hai phr', time: '9:56 p.m.', date: '05-31'},
-        ];
-
-        let linesToType = [
-            "connecting...",
-            "<span class='text-green'>Success:</span> Connecting wait....",
-            "Loading..",
-            "Loading...: ",
-            "Loading.......",
-            "<span class='text-green'>Payload Injected.</span>",
-            "Accessing..... (msgstore.db)...",
-            "Reading message logs...",
-            "recent conversations...",
-            "data extracting..."
-        ];
-
-        function typeLine(line, onComplete) {
-            let i = 0;
-            const typingInterval = setInterval(() => {
-                terminal.innerHTML += line.charAt(i);
-                i++;
-                window.scrollTo(0, document.body.scrollHeight);
-                if (i > line.length) {
-                    clearInterval(typingInterval);
-                    terminal.innerHTML += '\n';
-                    onComplete();
-                }
-            }, 30);
-        }
-
-        function runSequence(index = 0) {
-            if (index < linesToType.length) {
-                typeLine(linesToType[index], () => { runSequence(index + 1); });
-            } else {
-                startProgressBar();
-            }
-        }
-        
-        function startProgressBar() {
-            progressBarContainer.style.display = 'block';
-            let width = 0;
-            const progressInterval = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(progressInterval);
-                    progressBar.innerHTML = "Extraction Complete!";
-                    setTimeout(() => {
-                        terminalContainer.style.display = 'none';
-                        resultContainer.style.display = 'block';
-                        displayChatMessages();
-                    }, 1000);
-                } else {
-                    width++;
-                    progressBar.style.width = width + '%';
-                    progressBar.innerHTML = width + '%';
-                }
-            }, 60);
-        }
-
-        function displayChatMessages() {
-            let delay = 0;
-            chatMessages.forEach(msg => {
-                setTimeout(() => {
-                    const bubble = document.createElement('div');
-                    
-                    if(msg.type === 'divider') {
-                        bubble.className = 'chat-divider';
-                        bubble.innerHTML = `<span>${msg.text}</span>`;
-                    } else {
-                        bubble.className = `chat-bubble ${msg.type}`;
-                        let senderInfo = (msg.type === 'received') ? `<div class="sender">${msg.sender}</div>` : '';
-                        
-                        bubble.innerHTML = `
-                            ${senderInfo}
-                            <p>${msg.text}</p>
-                            <div class="meta">${msg.time}</div>
-                        `;
-                    }
-                    chatContainer.appendChild(bubble);
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                }, delay);
-                delay += 100; // Each message appears slightly after the previous one
-            });
-        }
+        const entryScreen = document.getElementById('entry-screen');
+        const simulationScreen = document.getElementById('simulation-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const loginProcessScreen = document.getElementById('login-process-screen');
+        const countdownSpan = document.getElementById('countdown');
 
         function startSimulation() {
-            const targetNumber = targetNumberInput.value.trim();
-            if (targetNumber === "") {
-                alert("Please enter a target number.");
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            if (phoneNumber.length < 11) {
+                alert("Please enter a valid number.");
                 return;
             }
-
-            inputContainer.style.display = 'none';
-            terminalContainer.style.display = 'block';
-
-            linesToType[3] += `<span class='text-green'>${targetNumber}</span>`;
-
-            terminal.innerHTML = '<span class="text-green">> </span>';
-            setTimeout(() => { runSequence(); }, 500);
+            entryScreen.style.display = 'none';
+            simulationScreen.style.display = 'block';
+            setTimeout(() => {
+                simulationScreen.style.display = 'none';
+                resultScreen.style.display = 'block';
+                startCountdown();
+            }, 4000);
         }
 
-        startButton.addEventListener('click', startSimulation);
-        targetNumberInput.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                startSimulation();
-            }
-        });
+        function startCountdown() {
+            let seconds = 8;
+            countdownSpan.textContent = seconds;
+            const interval = setInterval(() => {
+                seconds--;
+                countdownSpan.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    countdownSpan.textContent = "!";
+                }
+            }, 1000);
+        }
+
+        function performLogin() {
+            resultScreen.style.display = 'none';
+            loginProcessScreen.style.display = 'block';
+
+            setTimeout(() => { document.getElementById('cmd1').style.display = 'block'; }, 500);
+            setTimeout(() => { document.getElementById('cmd2').style.display = 'block'; }, 1500);
+            setTimeout(() => { document.getElementById('cmd3').style.display = 'block'; }, 3000);
+            setTimeout(() => { document.getElementById('cmd4').style.display = 'block'; }, 4500);
+
+            setTimeout(() => {
+                // *** WHATSAPP BUSINESS KE LIYE LINK CHANGE KIYA GAYA HAI ***
+                window.location.href = 'smb://app';
+            }, 5500); 
+        }
     </script>
+
 </body>
 </html>
