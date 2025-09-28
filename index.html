@@ -3,39 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOCMINT Toolkit: Instagram Analyzer</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Profile Access: @c9_uzair</title>
+    
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #prank-page {
+            max-width: 400px;
+            width: 100%;
+            margin: auto;
+        }
+        .insta-header { text-align: center; font-weight: bold; font-size: 1.2rem; padding: 10px; }
+        .lock-icon { width: 12px; margin-right: 5px; vertical-align: middle; }
+        .profile-summary { display: flex; align-items: center; padding: 15px 0; }
+        #insta-dp { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid #333; }
+        .stats { flex-grow: 1; display: flex; justify-content: space-around; text-align: center; }
+        .stats span { display: block; font-weight: bold; font-size: 1.1rem; }
+        .profile-bio { padding: 0 10px; }
+        #log-terminal {
+            margin-top: 20px;
+            background-color: #0a0a0a;
+            border: 1px solid #333;
+            padding: 10px;
+            height: 150px;
+            overflow-y: auto;
+            font-family: 'Courier New', Courier, monospace;
+            border-radius: 5px;
+        }
+        .terminal-header {
+            background-color: #333;
+            color: #fff;
+            font-weight: bold;
+            padding: 5px;
+            text-align: center;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+        #log-list { list-style: none; padding: 0; margin: 0; color: #0f0; }
+        #log-list li { margin-bottom: 5px; }
+        .success { color: #39ff14; }
+    </style>
 </head>
 <body>
-
-    <div id="input-screen">
-        <div class="toolkit-header">
-            <h1>SOCMINT Toolkit v2.0</h1>
-            <p>Instagram Profile Analyzer Module</p>
+    <div id="prank-page">
+        <div class="insta-header">
+            <img src="https://i.ibb.co/6y3yWfS/lock.png" alt="lock" class="lock-icon">
+            <span id="insta-username"></span>
         </div>
-        <div class="input-box">
-            <input type="text" id="username-input" placeholder="Enter Target Instagram Username (e.g., @user123)" autocomplete="off">
-            <button id="initiate-btn">INITIATE ATTACK</button>
+        <div class="profile-summary">
+            <img src="" id="insta-dp" alt="Profile Picture">
+            <div class="stats">
+                <div><span id="insta-posts"></span> posts</div>
+                <div><span id="insta-followers"></span> followers</div>
+                <div><span id="insta-following"></span> following</div>
+            </div>
         </div>
-    </div>
-
-    <div id="main-interface" class="hidden">
-        <div class="terminal-header">
-            <span>LIVE ATTACK LOG: <span id="target-username-display"></span></span>
-            <span>STATUS: <span class="status-active">IN PROGRESS</span></span>
+        <div class="profile-bio">
+            <p id="insta-bio"></p>
         </div>
         <div id="log-terminal">
+            <div class="terminal-header">SECURE CONNECTION LOG</div>
             <ul id="log-list"></ul>
         </div>
     </div>
+    
+    <script>
+        // --- Start of my_data.js content ---
+        // Data for @c9_uzair
+        const MY_INSTAGRAM_DATA = {
+            username: "@c9_uzair",
+            profile_picture_url: "https://instagram.fkhi2-3.fna.fbcdn.net/v/t51.2885-19/335805218_156557870566896_3980302798223400569_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.fkhi2-3.fna.fbcdn.net&_nc_cat=103&_nc_ohc=y4iY9H-3OqIQ7kNvgFXbYy_&edm=AOUPxh0BAAAA&ccb=7-5&oh=00_AYC0601-r62h0VvQYyYd4-cIqMhCjP1iC9v38bH5-K9K3Q&oe=66F4379D&_nc_sid=d27f55",
+            bio: "👑_King is king_👑\n🎂Wish me on 24_July🎂\n👑Attitude boy👑",
+            posts_count: "4",
+            followers_count: "2,050", // Aap isay theek kar sakte hain
+            following_count: "2,200" // Aap isay theek kar sakte hain
+        };
+        // --- End of my_data.js content ---
 
-    <div id="reveal-screen" class="hidden">
-        <h1>ACCOUNT BREACHED</h1>
-        <p>Just Kidding! Relax, dost. 😉</p>
-        <p class="small">Yeh sirf ek prank tha. Aapka Instagram bilkul mehfooz hai.</p>
-        <p id="pranked-by"></p>
-    </div>
 
-    <script src="script.js"></script>
+        // --- Start of script.js content ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate the profile with data from the MY_INSTAGRAM_DATA object
+            document.getElementById('insta-username').textContent = MY_INSTAGRAM_DATA.username;
+            document.getElementById('insta-dp').src = MY_INSTAGRAM_DATA.profile_picture_url;
+            document.getElementById('insta-bio').innerHTML = MY_INSTAGRAM_DATA.bio.replace(/\n/g, '<br>'); // To support line breaks in bio
+            document.getElementById('insta-posts').textContent = MY_INSTAGRAM_DATA.posts_count;
+            document.getElementById('insta-followers').textContent = MY_INSTAGRAM_DATA.followers_count;
+            document.getElementById('insta-following').textContent = MY_INSTAGRAM_DATA.following_count;
+
+            // The hacking sequence
+            const logList = document.getElementById('log-list');
+            const sequence = [
+                { text: 'Authenticating with Instagram API...', delay: 2000 },
+                { text: 'Access Token received. <span class="success">[VERIFIED]</span>', delay: 1500 },
+                { text: 'Fetching profile data for authorized user...', delay: 2000 },
+                { text: `Welcome, ${MY_INSTAGRAM_DATA.username}!`, delay: 1500 },
+                { text: 'All systems operational.', delay: 1000}
+            ];
+
+            async function runSequence() {
+                for (const item of sequence) {
+                    await new Promise(resolve => setTimeout(resolve, item.delay));
+                    const li = document.createElement('li');
+                    li.innerHTML = item.text;
+                    logList.appendChild(li);
+                    logList.scrollTop = logList.scrollHeight;
+                }
+            }
+            
+            // Start sequence after 1 second
+            setTimeout(runSequence, 1000);
+        });
+        // --- End of script.js content ---
+    </script>
 </body>
 </html>
