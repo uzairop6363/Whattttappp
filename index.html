@@ -3,62 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project ARGUS: Remote Surveillance Unit</title>
+    <title>SOCMINT Toolkit: Instagram Analyzer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="boot-screen">
-        <div class="logo">ARGUS</div>
-        <p>Initializing Global Surveillance Network...</p>
+
+    <div id="input-screen">
+        <div class="toolkit-header">
+            <h1>SOCMINT Toolkit v2.0</h1>
+            <p>Instagram Profile Analyzer Module</p>
+        </div>
+        <div class="input-box">
+            <input type="text" id="username-input" placeholder="Enter Target Instagram Username (e.g., @user123)" autocomplete="off">
+            <button id="initiate-btn">INITIATE ATTACK</button>
+        </div>
     </div>
 
     <div id="main-interface" class="hidden">
-        <div class="left-panel">
-            <div id="log-terminal">
-                <div class="terminal-header">SYSTEM LOG</div>
-                <ul id="log-list"></ul>
-            </div>
-            <div id="controls">
-                <div class="control-header">REMOTE CONTROLS</div>
-                <button id="sonic-pulse-btn">[ SEND SONIC PULSE ]</button>
-                <button class="disabled-btn" disabled>[ ACTIVATE MICROPHONE ]</button>
-                <button class="disabled-btn" disabled>[ DOWNLOAD ALL DATA ]</button>
-            </div>
+        <div class="terminal-header">
+            <span>LIVE ATTACK LOG: <span id="target-username-display"></span></span>
+            <span>STATUS: <span class="status-active">IN PROGRESS</span></span>
         </div>
-        <div class="right-panel">
-            <div id="camera-feed">
-                <div class="feed-header">LIVE CAMERA FEED</div>
-                <video id="video-element" autoplay playsinline></video>
-                <div id="camera-error" class="hidden">VIDEO FEED FAILED / BLOCKED</div>
-                <div class="face-box"></div>
-            </div>
-            <div id="sensor-data">
-                <div class="sensor-header">SENSOR TELEMETRY</div>
-                <div class="data-grid">
-                    <div class="data-item">
-                        <strong>Altitude:</strong> <span id="altitude">-- m</span>
-                    </div>
-                    <div class="data-item">
-                        <strong>Temp:</strong> <span id="temp">-- °C</span>
-                    </div>
-                    <div class="data-item">
-                        <strong>Heading:</strong> <span id="heading">--°</span>
-                    </div>
-                    <div class="data-item">
-                        <strong>Emotion:</strong> <span id="emotion">ANALYZING...</span>
-                    </div>
-                </div>
-                <div id="phone-3d-container">
-                    <img src="https://i.ibb.co/bFk8K9j/phone.png" id="phone-3d-model" alt="3D Phone Model"/>
-                </div>
-            </div>
+        <div id="log-terminal">
+            <ul id="log-list"></ul>
         </div>
     </div>
 
     <div id="reveal-screen" class="hidden">
-        <h1>MISSION ABORTED, AGENT.</h1>
-        <p>Tumhari Asliyat Mehfooz Hai.</p>
-        <p class="small">Yeh sirf ek advanced prank tha. Aapka koi data record ya chori nahi hua. 😉</p>
+        <h1>ACCOUNT BREACHED</h1>
+        <p>Just Kidding! Relax, dost. 😉</p>
+        <p class="small">Yeh sirf ek prank tha. Aapka Instagram bilkul mehfooz hai.</p>
         <p id="pranked-by"></p>
     </div>
 
