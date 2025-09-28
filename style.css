@@ -1,198 +1,133 @@
-/* General Body Styles */
+/* General Styles */
 body {
-    background-color: #000;
-    color: #0f0;
-    font-family: 'Courier New', Courier, monospace;
+    background-color: #0d0d0d;
+    color: #00ff00;
+    font-family: 'Consolas', 'Courier New', monospace;
     margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     overflow: hidden;
-    cursor: none;
 }
 
 .hidden {
     display: none !important;
 }
 
-/* Boot Screen */
-#boot-screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    animation: fadeIn 2s;
-}
-.logo {
-    font-size: 5rem;
-    font-weight: bold;
-    letter-spacing: 1rem;
-    color: #0f0;
-    text-shadow: 0 0 15px #0f0;
-}
-#boot-screen p {
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    animation: blink 1.5s infinite;
-}
-
-/* Main Interface */
-#main-interface {
-    display: flex;
-    padding: 10px;
-    height: calc(100vh - 20px);
-}
-.left-panel, .right-panel {
-    border: 1px solid #0f0;
-    padding: 10px;
-}
-.left-panel {
-    width: 35%;
-    display: flex;
-    flex-direction: column;
-}
-.right-panel {
-    width: 65%;
-    margin-left: 10px;
-}
-
-/* Terminal Log */
-#log-terminal {
-    height: 70%;
-    overflow-y: auto;
-    border: 1px solid #0a0;
-}
-.terminal-header, .control-header, .feed-header, .sensor-header {
-    background-color: #0f0;
-    color: #000;
-    font-weight: bold;
-    padding: 5px;
+/* Screen 1: Input Screen */
+#input-screen {
+    width: 600px;
     text-align: center;
+    border: 1px solid #00ff00;
+    padding: 30px;
+    background-color: #111;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+.toolkit-header h1 {
+    margin: 0;
+    letter-spacing: 5px;
+    text-shadow: 0 0 10px #00ff00;
+}
+.toolkit-header p {
+    color: #888;
+    margin-bottom: 30px;
+}
+#username-input {
+    width: 80%;
+    padding: 15px;
+    background-color: #000;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+#initiate-btn {
+    width: 85%;
+    padding: 15px;
+    background-color: #00ff00;
+    border: none;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+#initiate-btn:hover {
+    box-shadow: 0 0 20px #00ff00;
+}
+
+/* Screen 2: Main Interface */
+#main-interface {
+    width: 80%;
+    height: 80%;
+    border: 1px solid #00ff00;
+    display: flex;
+    flex-direction: column;
+}
+.terminal-header {
+    background-color: #00ff00;
+    color: #000;
+    padding: 10px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+.status-active {
+    animation: blink 1s infinite;
+}
+#log-terminal {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    font-size: 1.1rem;
 }
 #log-list {
     list-style: none;
-    padding: 10px;
     margin: 0;
+    padding: 0;
 }
 #log-list li {
-    padding-bottom: 5px;
+    margin-bottom: 10px;
     white-space: pre-wrap;
 }
-
-/* Controls */
-#controls {
-    margin-top: 10px;
-    height: 25%;
-    border: 1px solid #0a0;
+.success {
+    color: #39ff14; /* Neon Green */
 }
-#controls button {
-    background: transparent;
-    border: 1px solid #0f0;
-    color: #0f0;
-    padding: 10px;
-    width: calc(100% - 20px);
-    margin: 10px;
-    font-family: inherit;
-    font-size: 1rem;
-    cursor: none;
+.error {
+    color: #ff073a; /* Neon Red */
 }
-#controls button:hover {
-    background-color: #0f0;
-    color: #000;
-}
-.disabled-btn {
-    color: #050 !important;
-    border-color: #050 !important;
-}
-
-/* Camera Feed */
-#camera-feed {
-    height: 60%;
-    border: 1px solid #0a0;
-    position: relative;
-}
-#video-element {
+.progress-bar-container {
     width: 100%;
-    height: calc(100% - 28px);
-    object-fit: cover;
-    transform: scaleX(-1); /* Mirror effect */
+    height: 20px;
+    border: 1px solid #00ff00;
+    margin-top: 5px;
 }
-#camera-error {
-    color: red;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.5rem;
-}
-.face-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100px;
-    height: 120px;
-    border: 2px solid red;
-    transform: translate(-50%, -50%);
-    animation: blink-red 1s infinite;
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: #00ff00;
+    transition: width 2s linear;
 }
 
-/* Sensor Data */
-#sensor-data {
-    height: calc(38% - 10px);
-    margin-top: 10px;
-    border: 1px solid #0a0;
-    display: flex;
-}
-.data-grid {
-    width: 50%;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-.data-item {
-    border: 1px solid #050;
-    padding: 10px;
-}
-#phone-3d-container {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#phone-3d-model {
-    width: 100px;
-    transition: transform 0.1s linear;
-}
-
-/* Reveal Screen */
+/* Screen 3: Reveal Screen */
 #reveal-screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     text-align: center;
-    background-color: #000;
 }
 #reveal-screen h1 {
-    color: red;
+    color: #ff073a;
     font-size: 3rem;
 }
 #reveal-screen p {
     font-size: 1.5rem;
 }
 .small {
-    font-size: 1rem !important;
+    font-size: 1rem;
     color: #aaa;
 }
 
 /* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
 @keyframes blink {
-    50% { opacity: 0.5; }
-}
-@keyframes blink-red {
-    50% { border-color: transparent; }
+    50% { opacity: 0; }
 }
