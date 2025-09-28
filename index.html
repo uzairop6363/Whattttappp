@@ -3,194 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prank Simulation</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        .container {
-            background-color: #1e1e1e;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
-            width: 90%;
-            max-width: 400px;
-        }
-        h1 {
-            color: #00ff88;
-            margin-bottom: 20px;
-        }
-        input[type="tel"] {
-            width: calc(100% - 22px);
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            border: 1px solid #444;
-            background-color: #333;
-            color: #fff;
-            font-size: 16px;
-        }
-        .button {
-            background-color: #00ff88;
-            color: #121212;
-            border: none;
-            padding: 15px 25px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .button:hover {
-            background-color: #00e67a;
-            transform: scale(1.05);
-        }
-        #simulation-screen, #result-screen, #login-process-screen {
-            display: none; /* Initially hidden */
-        }
-        #countdown {
-            font-size: 24px;
-            color: #ff4d4d;
-            font-weight: bold;
-            margin-left: 15px;
-        }
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #00ff88;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        /* New Styles for Login Process Screen */
-        #login-process-screen {
-            background-color: #000;
-            border: 1px solid #00ff88;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: left;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        .command {
-            margin: 10px 0;
-            color: #00ff88;
-            display: none; /* Commands are hidden initially */
-        }
-        .command::after {
-            content: '█';
-            animation: blink 1s step-end infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-    </style>
+    <title>Project ARGUS: Remote Surveillance Unit</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="container">
-        <div id="entry-screen">
-            <h1>System Access</h1>
-            <p>Enter number to login:</p>
-            <input type="tel" id="phoneNumber" placeholder="e.g., 03001234567" value="03">
-            <button class="button" onclick="startSimulation()">Start</button>
-        </div>
-
-        <div id="simulation-screen">
-            <h2>Reloading Connection...</h2>
-            <p>Loading......</p>
-            <div class="loader"></div>
-            <p>Please wait.</p>
-        </div>
-
-        <div id="result-screen">
-            <h2>Connecting!</h2>
-            <p>Authentication required to proceed.</p>
-            <div class="login-container">
-                <button class="button" id="loginBtn" onclick="performLogin()">Login</button>
-                <span id="countdown">8</span>
-            </div>
-        </div>
-        
-        <div id="login-process-screen">
-            <p class="command" id="cmd1">> Loading...</p>
-            <p class="command" id="cmd2">> Authenticating...</p>
-            <p class="command" id="cmd3">> Login in WhatsApp on your device...</p>
-            <p class="command" id="cmd4">> Success! Opening application.</p>
-        </div>
-
+    <div id="boot-screen">
+        <div class="logo">ARGUS</div>
+        <p>Initializing Global Surveillance Network...</p>
     </div>
 
-    <script>
-        const entryScreen = document.getElementById('entry-screen');
-        const simulationScreen = document.getElementById('simulation-screen');
-        const resultScreen = document.getElementById('result-screen');
-        const loginProcessScreen = document.getElementById('login-process-screen');
-        const countdownSpan = document.getElementById('countdown');
+    <div id="main-interface" class="hidden">
+        <div class="left-panel">
+            <div id="log-terminal">
+                <div class="terminal-header">SYSTEM LOG</div>
+                <ul id="log-list"></ul>
+            </div>
+            <div id="controls">
+                <div class="control-header">REMOTE CONTROLS</div>
+                <button id="sonic-pulse-btn">[ SEND SONIC PULSE ]</button>
+                <button class="disabled-btn" disabled>[ ACTIVATE MICROPHONE ]</button>
+                <button class="disabled-btn" disabled>[ DOWNLOAD ALL DATA ]</button>
+            </div>
+        </div>
+        <div class="right-panel">
+            <div id="camera-feed">
+                <div class="feed-header">LIVE CAMERA FEED</div>
+                <video id="video-element" autoplay playsinline></video>
+                <div id="camera-error" class="hidden">VIDEO FEED FAILED / BLOCKED</div>
+                <div class="face-box"></div>
+            </div>
+            <div id="sensor-data">
+                <div class="sensor-header">SENSOR TELEMETRY</div>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <strong>Altitude:</strong> <span id="altitude">-- m</span>
+                    </div>
+                    <div class="data-item">
+                        <strong>Temp:</strong> <span id="temp">-- °C</span>
+                    </div>
+                    <div class="data-item">
+                        <strong>Heading:</strong> <span id="heading">--°</span>
+                    </div>
+                    <div class="data-item">
+                        <strong>Emotion:</strong> <span id="emotion">ANALYZING...</span>
+                    </div>
+                </div>
+                <div id="phone-3d-container">
+                    <img src="https://i.ibb.co/bFk8K9j/phone.png" id="phone-3d-model" alt="3D Phone Model"/>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        function startSimulation() {
-            const phoneNumber = document.getElementById('phoneNumber').value;
-            if (phoneNumber.length < 11) {
-                alert("Please enter a valid number.");
-                return;
-            }
-            entryScreen.style.display = 'none';
-            simulationScreen.style.display = 'block';
-            setTimeout(() => {
-                simulationScreen.style.display = 'none';
-                resultScreen.style.display = 'block';
-                startCountdown();
-            }, 4000);
-        }
+    <div id="reveal-screen" class="hidden">
+        <h1>MISSION ABORTED, AGENT.</h1>
+        <p>Tumhari Asliyat Mehfooz Hai.</p>
+        <p class="small">Yeh sirf ek advanced prank tha. Aapka koi data record ya chori nahi hua. 😉</p>
+        <p id="pranked-by"></p>
+    </div>
 
-        function startCountdown() {
-            let seconds = 8;
-            countdownSpan.textContent = seconds;
-            const interval = setInterval(() => {
-                seconds--;
-                countdownSpan.textContent = seconds;
-                if (seconds <= 0) {
-                    clearInterval(interval);
-                    countdownSpan.textContent = "!";
-                }
-            }, 1000);
-        }
-
-        function performLogin() {
-            resultScreen.style.display = 'none';
-            loginProcessScreen.style.display = 'block';
-
-            setTimeout(() => { document.getElementById('cmd1').style.display = 'block'; }, 500);
-            setTimeout(() => { document.getElementById('cmd2').style.display = 'block'; }, 1500);
-            setTimeout(() => { document.getElementById('cmd3').style.display = 'block'; }, 3000);
-            setTimeout(() => { document.getElementById('cmd4').style.display = 'block'; }, 4500);
-
-            setTimeout(() => {
-                // *** WHATSAPP BUSINESS KE LIYE LINK CHANGE KIYA GAYA HAI ***
-                window.location.href = 'https://api.whatsapp.com';
-            }, 5500); 
-        }
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
